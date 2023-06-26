@@ -2,11 +2,7 @@ import { SliderEvent, ISlidable, ISlider, SliderEventType } from "@/types";
 
 export default class Slider implements ISlider {
     slidables: ISlidable[] = [];
-    isNull: boolean = false;
     get activeIndex(): number | null {
-        if (this.isNull) {
-            return null;
-        }
         const index = this.slidables.findIndex((slidable) => slidable.isActive);
         if (index == -1) {
             return null;
@@ -76,7 +72,6 @@ export default class Slider implements ISlider {
             this.slidables.forEach((slidable, index) => {
                 slidable.goTo(null, index);
             });
-            this.isNull = true;
         } else {
             // if x is below 0, set it to 0
             // if x is above the length of the slidables, set it to the length of the slidables
@@ -85,7 +80,6 @@ export default class Slider implements ISlider {
             this.slidables.forEach((slidable, index) => {
                 slidable.goTo(newIndex, index);
             });
-            this.isNull = false;
         } 
 
         this.slideFuncs.forEach((callback) => callback({ slider: this, newIndex, prevIndex }));
